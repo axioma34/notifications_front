@@ -1,7 +1,13 @@
 <template>
     <body class="text-center">
-
     <main class="form-signin w-100 m-auto">
+      <div v-if="showError" class="alert alert-danger d-flex align-items-center alert-dismissible" role="alert">
+        <i class="bi bi-exclamation-triangle-fill pe-2"></i>
+        <div>
+          Invalid login or password!
+        </div>
+        <button @click="showError = false" type="button" class="btn-close btn-sm" aria-label="Close"></button>
+      </div>
       <form @submit.prevent="submit">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -35,7 +41,8 @@ export default {
   data () {
     return {
       login: null,
-      password: null
+      password: null,
+      showError: false
     }
   },
   methods: {
@@ -48,6 +55,7 @@ export default {
         })
         await this.$router.push('/')
       } catch (error) {
+        this.showError = true
         console.log(error)
       }
     }
